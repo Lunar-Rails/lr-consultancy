@@ -1,5 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Beams from './components/Beams';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 const logoPathsD = {
   consultancy: [
@@ -49,15 +52,25 @@ function LogoSVG({ className }) {
   );
 }
 
-export default function App() {
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
+function AppContent() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
   const heroAreaRef = useRef(null);
-  const [darkNav, setDarkNav] = useState(true);
+  const [darkNav, setDarkNav] = useState(isHome);
   const [formSent, setFormSent] = useState(false);
   const [formError, setFormError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Scroll-based nav theme
+  // Scroll-based nav theme — dark only on home page over the hero
   useEffect(() => {
+    if (!isHome) { setDarkNav(false); return; }
+    setDarkNav(true);
     const onScroll = () => {
       if (!heroAreaRef.current) return;
       const bottom = heroAreaRef.current.getBoundingClientRect().bottom;
@@ -65,7 +78,7 @@ export default function App() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [isHome]);
 
   // Scroll reveal: observe all .reveal and .reveal-stagger elements
   useEffect(() => {
@@ -107,6 +120,8 @@ export default function App() {
 
   return (
     <>
+      <ScrollToTop />
+
       {/* ─── NAV: sticky for the full page ─── */}
       <nav className={darkNav ? 'nav-dark' : 'nav-light'}>
         <div className="container">
@@ -143,6 +158,11 @@ export default function App() {
         <a href="#company"  onClick={closeMobileMenu}>Company</a>
         <a href="#contact"  onClick={closeMobileMenu} className="mobile-menu-cta">Contact Us</a>
       </div>
+
+      <Routes>
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/" element={<>
 
       {/* ─── HERO AREA: Beams bg pulled up behind nav via margin-top ─── */}
       <div className="hero-area" ref={heroAreaRef}>
@@ -357,6 +377,9 @@ export default function App() {
         </div>
       </section>
 
+        </>} />
+      </Routes>
+
       {/* ─── FOOTER ─── */}
       <footer>
         <div className="container">
@@ -372,8 +395,8 @@ export default function App() {
               <li><a href="#company">Company</a></li>
             </ul>
             <ul className="footer-links">
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Terms</a></li>
+              <li><Link to="/privacy">Privacy</Link></li>
+              <li><Link to="/terms">Terms</Link></li>
             </ul>
           </div>
 
@@ -388,8 +411,8 @@ export default function App() {
             <a href="#services">Services</a>
             <a href="#why-us">Why Us</a>
             <a href="#company">Company</a>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
           </nav>
 
           <div className="footer-bottom">
@@ -399,5 +422,13 @@ export default function App() {
         </div>
       </footer>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
