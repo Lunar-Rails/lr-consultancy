@@ -1,0 +1,38 @@
+# Lunar Rails Consultancy
+
+> Compliance-first advisory for firms operating in digital assets. Regulatory guidance and cost intelligence, structured for action.
+
+Lunar Rails Consultancy LTD is the advisory arm of the Lunar Rails group. Licensed in Ras Al Khaimah under the RAK Digital Assets Oasis Authority (License 07010347). A subsidiary of OTC Services DMCC.
+
+## What We Do
+
+We provide structured advisory services to virtual asset businesses operating in regulated environments. We do not offer generalist advice. Every engagement is scoped around measurable outcomes.
+
+### Regulatory and Compliance
+Jurisdiction mapping, licensing strategy, and compliance frameworks for virtual asset service providers. Services include: licensing and jurisdiction strategy, AML/CFT program design, regulatory reporting support, and policy documentation.
+
+### Cost Control and Financial Intelligence
+Operational cost modelling, fee benchmarking, and data-driven reporting frameworks. Services include: cost modelling and benchmarking, KPI design and reporting frameworks, spend rationalization, and financial dashboards.
+
+## Who We Work With
+
+Virtual asset firms, digital asset service providers, and financial institutions that need clear regulatory positioning and tighter operational cost control in the UAE and international markets.
+
+## Our Differentiation
+
+- Data-driven methodology: every recommendation is grounded in quantitative analysis
+- Regulatory depth: active RAK DAO licensing and real jurisdictional knowledge
+- Implementation focus: we deliver policy documents, operational frameworks, and reporting tools that work from day one
+
+## Entity Details
+
+- Full name: Lunar Rails Consultancy LTD
+- License: 07010347
+- Regulator: RAK Digital Assets Oasis Authority (RAK DAO)
+- Jurisdiction: Ras Al Khaimah, United Arab Emirates
+- Parent group: Lunar Rails (operating across OTC trading, custody, and advisory)
+- Structure: Subsidiary of OTC Services DMCC
+
+## Contact
+
+Website: https://lrconsultancy.com
