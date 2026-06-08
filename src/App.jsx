@@ -53,7 +53,9 @@ export default function App() {
   const heroAreaRef = useRef(null);
   const [darkNav, setDarkNav] = useState(true);
   const [formSent, setFormSent] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  // Scroll-based nav theme
   useEffect(() => {
     const onScroll = () => {
       if (!heroAreaRef.current) return;
@@ -63,6 +65,27 @@ export default function App() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Scroll reveal: observe all .reveal and .reveal-stagger elements
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal, .reveal-stagger');
+    if (!els.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -48px 0px' }
+    );
+    els.forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  function closeMobileMenu() { setMenuOpen(false); }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -97,10 +120,28 @@ export default function App() {
               <li><a href="#why-us">Why Us</a></li>
               <li><a href="#company">Company</a></li>
             </ul>
-            <a href="#contact" className="btn btn-primary">Contact Us</a>
+            <div className="nav-right">
+              <button
+                className={`hamburger${menuOpen ? ' open' : ''}`}
+                aria-label="Toggle menu"
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen(o => !o)}
+              >
+                <span /><span /><span />
+              </button>
+              <a href="#contact" className="btn btn-primary" onClick={closeMobileMenu}>Contact Us</a>
+            </div>
           </div>
         </div>
       </nav>
+
+      {/* Mobile menu panel */}
+      <div className={`mobile-menu${menuOpen ? ' open' : ''}`} aria-hidden={!menuOpen}>
+        <a href="#about"    onClick={closeMobileMenu}>About</a>
+        <a href="#services" onClick={closeMobileMenu}>Services</a>
+        <a href="#why-us"   onClick={closeMobileMenu}>Why Us</a>
+        <a href="#company"  onClick={closeMobileMenu}>Company</a>
+      </div>
 
       {/* ─── HERO AREA: Beams bg pulled up behind nav via margin-top ─── */}
       <div className="hero-area" ref={heroAreaRef}>
@@ -138,13 +179,13 @@ export default function App() {
       {/* ─── FOUNDATION ─── */}
       <section className="section-surface" id="foundation">
         <div className="container">
-          <span className="eyebrow">Our Foundation</span>
-          <div className="section-header narrow">
+          <span className="eyebrow reveal">Our Foundation</span>
+          <div className="section-header narrow reveal" style={{ transitionDelay: '0.1s' }}>
             <h2>Built Around Digital Finance Complexity</h2>
             <p>Lunar Rails Consultancy LTD is the advisory arm of the Lunar Rails group, licensed in Ras Al Khaimah under the RAK Digital Assets Oasis Authority.</p>
             <p>We work with virtual asset firms that need clear regulatory positioning and tighter operational cost control. No generalist advice. No ambiguity.</p>
           </div>
-          <div className="cards-grid">
+          <div className="cards-grid reveal-stagger">
             <div className="card">
               <span className="card-label">Mandate</span>
               <p className="card-body">Structured, actionable guidance for virtual asset businesses in regulated environments.</p>
@@ -164,12 +205,12 @@ export default function App() {
       {/* ─── SERVICES ─── */}
       <section className="section" id="services">
         <div className="container">
-          <span className="eyebrow">02 - What We Deliver</span>
-          <div className="section-header narrow">
+          <span className="eyebrow reveal">02 - What We Deliver</span>
+          <div className="section-header narrow reveal" style={{ transitionDelay: '0.1s' }}>
             <h2>Two Service Domains</h2>
             <p>Regulatory compliance and cost control. Each discipline is data-driven and delivered as implementation-ready outputs.</p>
           </div>
-          <div className="cards-grid cards-grid-2col">
+          <div className="cards-grid cards-grid-2col reveal-stagger">
             <div className="card card-large">
               <span className="card-num">001</span>
               <p className="card-title">Regulatory &amp; Compliance</p>
@@ -201,12 +242,12 @@ export default function App() {
       {/* ─── WHY US ─── */}
       <section className="section-surface" id="why-us">
         <div className="container">
-          <span className="eyebrow">Why Lunar Rails Consultancy</span>
-          <div className="split-header">
+          <span className="eyebrow reveal">Why Lunar Rails Consultancy</span>
+          <div className="split-header reveal" style={{ transitionDelay: '0.1s' }}>
             <h2>Precision Over Generalism</h2>
             <p className="split-body">We do one thing: help virtual asset businesses operate with fewer surprises. Every engagement is scoped around measurable outcomes.</p>
           </div>
-          <div className="cards-grid">
+          <div className="cards-grid reveal-stagger">
             <div className="card">
               <span className="card-num">001</span>
               <p className="card-title">Data-Driven Methodology</p>
@@ -229,14 +270,14 @@ export default function App() {
       {/* ─── ENTITY ─── */}
       <section className="section" id="company">
         <div className="container">
-          <span className="eyebrow">The Entity</span>
+          <span className="eyebrow reveal">The Entity</span>
           <div className="entity-grid">
-            <div className="entity-left">
+            <div className="entity-left reveal" style={{ transitionDelay: '0.1s' }}>
               <h2>A Licensed UAE Entity</h2>
               <p>Registered under the RAK Digital Assets Oasis Authority, Lunar Rails Consultancy LTD operates as a subsidiary of OTC Services DMCC within the broader Lunar Rails group.</p>
               <p>All advisory work is carried out under active licensure and within UAE compliance standards.</p>
             </div>
-            <div className="entity-cards">
+            <div className="entity-cards reveal-stagger" style={{ transitionDelay: '0.15s' }}>
               <div className="entity-card">
                 <span className="card-label">RAK Digital Assets Oasis</span>
                 <p className="card-body">A specialist UAE free zone authority providing a clear regulatory path for virtual asset service providers and consultants.</p>
@@ -254,7 +295,7 @@ export default function App() {
       <section className="section-surface" id="contact">
         <div className="container">
           <div className="contact-grid">
-            <div className="contact-left">
+            <div className="contact-left reveal">
               <span className="eyebrow">Get in Touch</span>
               <h2>Start a conversation</h2>
               <p>Tell us what you are dealing with. We will scope a structured path forward.</p>
