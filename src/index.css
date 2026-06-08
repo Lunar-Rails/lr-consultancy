@@ -802,4 +802,16 @@ nav.nav-light .hamburger span { background: #000000; }
 
 @media (max-width: 900px) {
   .hamburger { display: flex; }
+  .nav-right .btn { display: none; }
+}
+
+.mobile-menu-cta {
+  margin-top: 8px;
+  padding: 14px 20px !important;
+  background: var(--brand) !important;
+  color: #F0EFF2 !important;
+  border: none !important;
+  border-radius: 4px;
+  text-align: center;
+  justify-content: center;
 }

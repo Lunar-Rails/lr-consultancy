@@ -141,6 +141,7 @@ export default function App() {
         <a href="#services" onClick={closeMobileMenu}>Services</a>
         <a href="#why-us"   onClick={closeMobileMenu}>Why Us</a>
         <a href="#company"  onClick={closeMobileMenu}>Company</a>
+        <a href="#contact"  onClick={closeMobileMenu} className="mobile-menu-cta">Contact Us</a>
       </div>
 
       {/* ─── HERO AREA: Beams bg pulled up behind nav via margin-top ─── */}
