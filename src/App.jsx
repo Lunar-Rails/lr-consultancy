@@ -92,24 +92,42 @@ function AppContent() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [isHome]);
 
-  // Scroll reveal: observe all .reveal and .reveal-stagger elements
+  // Scroll reveal — re-runs when isHome changes so fresh DOM elements are observed
   useEffect(() => {
-    const els = document.querySelectorAll('.reveal, .reveal-stagger');
-    if (!els.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -48px 0px' }
-    );
-    els.forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+    if (!isHome) return;
+
+    // Wait one frame for layout to settle after route change / scroll-to-hash
+    const raf = requestAnimationFrame(() => {
+      const els = document.querySelectorAll('.reveal, .reveal-stagger');
+      if (!els.length) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -48px 0px' }
+      );
+
+      els.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        // Immediately reveal elements already in the viewport on mount
+        if (rect.top < window.innerHeight - 48 && rect.bottom > 0) {
+          el.classList.add('visible');
+        } else {
+          observer.observe(el);
+        }
+      });
+
+      return () => observer.disconnect();
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [isHome]);
 
   function closeMobileMenu() { setMenuOpen(false); }
 
