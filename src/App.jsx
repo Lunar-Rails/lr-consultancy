@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Beams from './components/Beams';
 import Privacy from './pages/Privacy';
@@ -54,11 +54,12 @@ function LogoSVG({ className }) {
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
-  useEffect(() => {
+  // useLayoutEffect fires synchronously after DOM update, before browser paint —
+  // this beats the browser's own scroll restoration
+  useLayoutEffect(() => {
     if (!hash) {
       window.scrollTo(0, 0);
     } else {
-      // Wait for React to render the target before scrolling
       const timer = setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
