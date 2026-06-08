@@ -340,11 +340,17 @@ export default function App() {
       {/* ─── FOOTER ─── */}
       <footer>
         <div className="container">
-          {/* Desktop: logo left, Privacy/Terms right */}
+          {/* Desktop: logo left, nav center, Privacy/Terms right */}
           <div className="footer-top">
             <a href="#" className="logo" aria-label="Lunar Rails Consultancy">
               <LogoSVG className="logo-svg-footer" style={{ color: '#000000' }} />
             </a>
+            <ul className="footer-nav">
+              <li><a href="#about">About</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#why-us">Why Us</a></li>
+              <li><a href="#company">Company</a></li>
+            </ul>
             <ul className="footer-links">
               <li><a href="#">Privacy</a></li>
               <li><a href="#">Terms</a></li>
