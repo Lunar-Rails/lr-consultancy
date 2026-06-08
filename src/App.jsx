@@ -53,6 +53,7 @@ export default function App() {
   const heroAreaRef = useRef(null);
   const [darkNav, setDarkNav] = useState(true);
   const [formSent, setFormSent] = useState(false);
+  const [formError, setFormError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Scroll-based nav theme
@@ -89,20 +90,19 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const form = e.target;
+    setFormError(false);
+    // Use FormData to avoid JS name-conflict with form.name (returns form's own name attr)
+    const body = new URLSearchParams(new FormData(e.target)).toString();
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        'form-name': 'contact',
-        name: form.name.value,
-        email: form.email.value,
-        company: form.company.value,
-        message: form.message.value,
-      }).toString(),
+      body,
     })
-      .then(() => setFormSent(true))
-      .catch(() => alert('Submission failed. Please try again.'));
+      .then(res => {
+        if (!res.ok) throw new Error(res.status);
+        setFormSent(true);
+      })
+      .catch(() => setFormError(true));
   }
 
   return (
@@ -301,38 +301,58 @@ export default function App() {
               <h2>Start a conversation</h2>
               <p>Tell us what you are dealing with. We will scope a structured path forward.</p>
             </div>
-            <form className="form-fields" name="contact" onSubmit={handleSubmit}>
-              <input type="hidden" name="form-name" value="contact" />
-              <div className="form-field" style={{ display: 'none' }}>
-                <label>Do not fill this out: <input name="bot-field" /></label>
+            {formSent ? (
+              <div className="form-success">
+                <div className="form-success-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <circle cx="11" cy="11" r="10" stroke="#492BFF" strokeWidth="1.5"/>
+                    <path d="M7 11l3 3 5-5" stroke="#492BFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3>Message received</h3>
+                <p>We will review your enquiry and be in touch shortly.</p>
               </div>
-              <div className="form-field">
-                <label htmlFor="name">Full Name</label>
-                <input type="text" id="name" name="name" autoComplete="name" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="email">Work Email</label>
-                <input type="email" id="email" name="email" autoComplete="email" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="company">Company</label>
-                <input type="text" id="company" name="company" autoComplete="organization" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="message">Message (Optional)</label>
-                <textarea id="message" name="message" rows={4} />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-full"
-                  disabled={formSent}
-                  style={formSent ? { opacity: 0.6, cursor: 'default' } : {}}
-                >
-                  {formSent ? 'Sent' : 'Submit'}
-                </button>
-              </div>
-            </form>
+            ) : (
+              <form
+                className="form-fields"
+                name="contact"
+                data-netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                {/* Honeypot — hidden from real users, catches bots */}
+                <div style={{ display: 'none' }} aria-hidden="true">
+                  <label>Do not fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label>
+                </div>
+                <div className="form-field">
+                  <label htmlFor="name">Full Name</label>
+                  <input type="text" id="name" name="name" autoComplete="name" required />
+                </div>
+                <div className="form-field">
+                  <label htmlFor="email">Work Email</label>
+                  <input type="email" id="email" name="email" autoComplete="email" required />
+                </div>
+                <div className="form-field">
+                  <label htmlFor="company">Company</label>
+                  <input type="text" id="company" name="company" autoComplete="organization" required />
+                </div>
+                <div className="form-field">
+                  <label htmlFor="message">Message (Optional)</label>
+                  <textarea id="message" name="message" rows={4} />
+                </div>
+                {formError && (
+                  <p className="form-error-msg" role="alert">
+                    Submission failed. Please try again or email us at{' '}
+                    <a href="mailto:info@lunarconsult.io">info@lunarconsult.io</a>.
+                  </p>
+                )}
+                <div>
+                  <button type="submit" className="btn btn-primary btn-full">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </section>
