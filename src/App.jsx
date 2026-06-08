@@ -53,8 +53,20 @@ function LogoSVG({ className }) {
 }
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+    } else {
+      // Wait for React to render the target before scrolling
+      const timer = setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        else window.scrollTo(0, 0);
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname, hash]);
   return null;
 }
 
@@ -126,14 +138,14 @@ function AppContent() {
       <nav className={darkNav ? 'nav-dark' : 'nav-light'}>
         <div className="container">
           <div className="nav-inner">
-            <a href="#" className="logo" aria-label="Lunar Rails Consultancy">
+            <Link to="/" className="logo" aria-label="Lunar Rails Consultancy">
               <LogoSVG className="logo-svg" />
-            </a>
+            </Link>
             <ul className="nav-links">
-              <li><a href="#about">About</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#why-us">Why Us</a></li>
-              <li><a href="#company">Company</a></li>
+              <li><Link to="/#about">About</Link></li>
+              <li><Link to="/#services">Services</Link></li>
+              <li><Link to="/#why-us">Why Us</Link></li>
+              <li><Link to="/#company">Company</Link></li>
             </ul>
             <div className="nav-right">
               <button
@@ -144,7 +156,7 @@ function AppContent() {
               >
                 <span /><span /><span />
               </button>
-              <a href="#contact" className="btn btn-primary" onClick={closeMobileMenu}>Contact Us</a>
+              <Link to="/#contact" className="btn btn-primary" onClick={closeMobileMenu}>Contact Us</Link>
             </div>
           </div>
         </div>
@@ -152,11 +164,11 @@ function AppContent() {
 
       {/* Mobile menu panel */}
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`} aria-hidden={!menuOpen}>
-        <a href="#about"    onClick={closeMobileMenu}>About</a>
-        <a href="#services" onClick={closeMobileMenu}>Services</a>
-        <a href="#why-us"   onClick={closeMobileMenu}>Why Us</a>
-        <a href="#company"  onClick={closeMobileMenu}>Company</a>
-        <a href="#contact"  onClick={closeMobileMenu} className="mobile-menu-cta">Contact Us</a>
+        <Link to="/#about"   onClick={closeMobileMenu}>About</Link>
+        <Link to="/#services" onClick={closeMobileMenu}>Services</Link>
+        <Link to="/#why-us"  onClick={closeMobileMenu}>Why Us</Link>
+        <Link to="/#company" onClick={closeMobileMenu}>Company</Link>
+        <Link to="/#contact" onClick={closeMobileMenu} className="mobile-menu-cta">Contact Us</Link>
       </div>
 
       <Routes>
@@ -385,14 +397,14 @@ function AppContent() {
         <div className="container">
           {/* Desktop: logo left, nav center, Privacy/Terms right */}
           <div className="footer-top">
-            <a href="#" className="logo" aria-label="Lunar Rails Consultancy">
+            <Link to="/" className="logo" aria-label="Lunar Rails Consultancy">
               <LogoSVG className="logo-svg-footer" style={{ color: '#000000' }} />
-            </a>
+            </Link>
             <ul className="footer-nav">
-              <li><a href="#about">About</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#why-us">Why Us</a></li>
-              <li><a href="#company">Company</a></li>
+              <li><Link to="/#about">About</Link></li>
+              <li><Link to="/#services">Services</Link></li>
+              <li><Link to="/#why-us">Why Us</Link></li>
+              <li><Link to="/#company">Company</Link></li>
             </ul>
             <ul className="footer-links">
               <li><Link to="/privacy">Privacy</Link></li>
@@ -402,15 +414,15 @@ function AppContent() {
 
           {/* Mobile: centered logo + all links stacked */}
           <div className="footer-mobile-logo">
-            <a href="#" className="logo" aria-label="Lunar Rails Consultancy">
+            <Link to="/" className="logo" aria-label="Lunar Rails Consultancy">
               <LogoSVG className="logo-svg-footer" style={{ color: '#000000' }} />
-            </a>
+            </Link>
           </div>
           <nav className="footer-mobile-nav">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#why-us">Why Us</a>
-            <a href="#company">Company</a>
+            <Link to="/#about">About</Link>
+            <Link to="/#services">Services</Link>
+            <Link to="/#why-us">Why Us</Link>
+            <Link to="/#company">Company</Link>
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms</Link>
           </nav>
