@@ -58,12 +58,13 @@ function ScrollToTop() {
   // this beats the browser's own scroll restoration
   useLayoutEffect(() => {
     if (!hash) {
-      window.scrollTo(0, 0);
+      // 'instant' overrides html { scroll-behavior: smooth } — no animation on load
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     } else {
       const timer = setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
-        else window.scrollTo(0, 0);
+        else window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }, 80);
       return () => clearTimeout(timer);
     }
