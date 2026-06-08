@@ -23,4 +23,4 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-Sitemap: https://lrconsultancy.com/sitemap.xml
+Sitemap: https://lunarrailsconsultancy.com/sitemap.xml

@@ -163,13 +163,7 @@ npm run build      # Production build → dist/index.html (single file)
 git push origin main  # Triggers Netlify auto-deploy
 ```
 
-**Before building for Netlify:** update the placeholder domain in:
-- `index.html` (canonical URL, og:image, JSON-LD)
-- `public/robots.txt` (sitemap URL)
-- `public/sitemap.xml`
-- `public/llms.txt`
-
-Replace `https://lrconsultancy.com` with the actual live domain.
+**Live domain:** `https://lunarrailsconsultancy.com` — set across index.html, robots.txt, sitemap.xml, and llms.txt.
 
 ---
 
@@ -178,6 +172,6 @@ Replace `https://lrconsultancy.com` with the actual live domain.
 - [ ] Replace Terms of Service placeholder copy in `src/pages/Terms.jsx`
 - [ ] Save logo PNG as `public/favicon-512.png` (used for Apple touch icon + og:image)
 - [ ] Create `public/og-image.png` (1200×630) for social previews
-- [ ] Update all `lrconsultancy.com` domain placeholders with real domain
+- [x] Domain set to `https://lunarrailsconsultancy.com`
 - [ ] Set up Netlify email notification: Forms → contact → `info@lunarconsult.io`
 - [ ] Connect custom domain in Netlify dashboard

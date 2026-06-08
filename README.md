@@ -113,11 +113,7 @@ Contact form submissions are handled by Netlify Forms. To receive email notifica
 - [ ] Replace Terms of Service placeholder copy in `src/pages/Terms.jsx`
 - [ ] Save logo PNG as `public/favicon-512.png` (Apple touch icon + og:image fallback)
 - [ ] Create `public/og-image.png` at 1200×630px for social previews
-- [ ] Replace all `lrconsultancy.com` placeholders with the live domain in:
-  - `index.html` (canonical, og:url, og:image, JSON-LD)
-  - `public/robots.txt`
-  - `public/sitemap.xml`
-  - `public/llms.txt`
+- [x] Domain set to `https://lunarrailsconsultancy.com` across index.html, robots.txt, sitemap.xml, llms.txt
 - [ ] Configure Netlify email notification for form submissions
 - [ ] Connect custom domain in Netlify dashboard
 
