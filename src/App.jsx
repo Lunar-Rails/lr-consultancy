@@ -340,6 +340,7 @@ export default function App() {
       {/* ─── FOOTER ─── */}
       <footer>
         <div className="container">
+          {/* Desktop: logo left, Privacy/Terms right */}
           <div className="footer-top">
             <a href="#" className="logo" aria-label="Lunar Rails Consultancy">
               <LogoSVG className="logo-svg-footer" style={{ color: '#000000' }} />
@@ -349,6 +350,22 @@ export default function App() {
               <li><a href="#">Terms</a></li>
             </ul>
           </div>
+
+          {/* Mobile: centered logo + all links stacked */}
+          <div className="footer-mobile-logo">
+            <a href="#" className="logo" aria-label="Lunar Rails Consultancy">
+              <LogoSVG className="logo-svg-footer" style={{ color: '#000000' }} />
+            </a>
+          </div>
+          <nav className="footer-mobile-nav">
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#why-us">Why Us</a>
+            <a href="#company">Company</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </nav>
+
           <div className="footer-bottom">
             <p>Lunar Rails Consultancy LTD</p>
             <p>License 07010347 | RAK DAO | A subsidiary of OTC Services DMCC | Copyright 2026</p>

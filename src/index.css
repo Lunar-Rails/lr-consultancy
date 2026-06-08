@@ -623,6 +623,54 @@ footer {
   margin-top: 4px;
 }
 
+/* Mobile-only footer elements — hidden on desktop */
+.footer-mobile-logo,
+.footer-mobile-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /* Hide desktop layout */
+  .footer-top { display: none; }
+
+  /* Show centered logo */
+  .footer-mobile-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  /* Centered stacked links */
+  .footer-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid var(--b1);
+    margin-bottom: 28px;
+  }
+
+  .footer-mobile-nav a {
+    font-family: var(--font-m);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--t3);
+    text-decoration: none;
+    padding: 14px 0;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--b1);
+    transition: color 0.15s ease;
+  }
+
+  .footer-mobile-nav a:last-child { border-bottom: none; }
+  .footer-mobile-nav a:hover { color: var(--t1); }
+
+  /* Center legal text */
+  .footer-bottom { text-align: center; }
+}
+
 /* ─── RESPONSIVE ─── */
 
 @media (max-width: 900px) {
