@@ -168,8 +168,8 @@ git push origin main  # Triggers Netlify auto-deploy
 ---
 
 ## Things to do before go-live
-- [ ] Replace Privacy Policy placeholder copy in `src/pages/Privacy.jsx`
-- [ ] Replace Terms of Service placeholder copy in `src/pages/Terms.jsx`
+- [x] Replace Privacy Policy placeholder copy in `src/pages/Privacy.jsx`
+- [x] Replace Terms of Service placeholder copy in `src/pages/Terms.jsx`
 - [ ] Save logo PNG as `public/favicon-512.png` (used for Apple touch icon + og:image)
 - [ ] Create `public/og-image.png` (1200×630) for social previews
 - [x] Domain set to `https://lunarrailsconsultancy.com`
